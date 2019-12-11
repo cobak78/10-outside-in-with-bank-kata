@@ -4,14 +4,8 @@ import java.util.ArrayList;
 
 public class BankAccount {
 
-    private  Display display;
     private  TransactionRegistry transactionRegistry;
     private  Printer printer;
-
-    public BankAccount(Display display, TransactionRegistry transactionRegistry) {
-        this.display = display;
-        this.transactionRegistry = transactionRegistry;
-    }
 
     public BankAccount(Printer printer, TransactionRegistry transactions) {
         this.printer = printer;

@@ -1,6 +1,5 @@
 package bank;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StatementPrinter implements Printer {
@@ -18,8 +17,8 @@ public class StatementPrinter implements Printer {
 
         List<StatementLine> statementLines = statement.getLines();
 
-        for (StatementLine statementLine : statementLines) {
-            output += formatter.formatLine(statementLine);
+        for (int i = statementLines.size() - 1; i >= 0; i--) {
+            output += formatter.formatLine(statementLines.get(i));
         }
 
         display.print(output);

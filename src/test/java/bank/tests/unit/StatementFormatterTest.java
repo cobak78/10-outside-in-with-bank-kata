@@ -29,7 +29,7 @@ public class StatementFormatterTest {
 
         String line = formatter.formatLine(statementLine);
 
-        assertThat(line, is("10/02/2019 || 500.00 ||  || 1000.00\n"));
+        assertThat(line, is("10/02/2019 || 500.00 || || 1000.00\n"));
     }
 
     @Test
@@ -40,6 +40,6 @@ public class StatementFormatterTest {
 
         String line = formatter.formatLine(statementLine);
 
-        assertThat(line, is("16/03/2015 ||  || 1500.00 || 300.00\n"));
+        assertThat(line, is("16/03/2015 || || 1500.00 || 300.00\n"));
     }
 }

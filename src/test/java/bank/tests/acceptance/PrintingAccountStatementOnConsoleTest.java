@@ -1,9 +1,6 @@
 package bank.tests.acceptance;
 
-import bank.BankAccount;
-import bank.CCalendar;
-import bank.Display;
-import bank.TransactionRegistry;
+import bank.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,16 +11,18 @@ import static org.mockito.Mockito.*;
 public class PrintingAccountStatementOnConsoleTest {
 
     private BankAccount bankAccount;
-    private Display output;
     private CCalendar calendar;
+    private Printer printer;
+    private Display display;
 
     @Before
     public void setUp() throws Exception {
         calendar = mock(CCalendar.class);
-        output = mock(Display.class);
-        TransactionRegistry transactions = mock(TransactionRegistry.class);
+        display = mock(Display.class);
+        printer = new StatementPrinter(display, new TextStatementFormatter());
+        TransactionRegistry transactions = new InMemoryTransactionRegistry(calendar);
 
-        bankAccount = new BankAccount(output, transactions);
+        bankAccount = new BankAccount(printer, transactions);
     }
 
     @Test
@@ -49,10 +48,11 @@ public class PrintingAccountStatementOnConsoleTest {
         bankAccount.deposit(2000);
         bankAccount.withdrawal(500);
 
-        spy(output).print("date || credit || debit || balance\n" +
+        bankAccount.print();
+
+        verify(display).print("date || credit || debit || balance\n" +
                 "14/01/2012 || || 500.00 || 2500.00\n" +
                 "13/01/2012 || 2000.00 || || 3000.00\n" +
                 "10/01/2012 || 1000.00 || || 1000.00\n");
-        bankAccount.print();
     }
 }

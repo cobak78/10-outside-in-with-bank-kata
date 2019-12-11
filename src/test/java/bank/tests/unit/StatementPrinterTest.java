@@ -46,13 +46,13 @@ public class StatementPrinterTest {
 
         when(formatter.formatLine(any(StatementLine.class)))
                 .thenReturn("10/01/2013 || || 100.00 || 900.00\n")
-                .thenReturn("10/01/2012 || 1000.00 ||  || 1000.00\n");
+                .thenReturn("10/01/2012 || 1000.00 || || 1000.00\n");
 
         statementPrinter.print(statement);
 
         verify(display).print("date || credit || debit || balance\n" +
                         "10/01/2013 || || 100.00 || 900.00\n" +
-                "10/01/2012 || 1000.00 ||  || 1000.00\n");
+                "10/01/2012 || 1000.00 || || 1000.00\n");
 
     }
 }

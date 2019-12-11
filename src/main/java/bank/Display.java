@@ -1,5 +1,5 @@
 package bank;
 
 public interface Display {
-    public void print(String transactions);
+    void print(String transactions);
 }

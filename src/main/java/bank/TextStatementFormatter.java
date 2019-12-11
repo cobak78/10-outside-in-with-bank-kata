@@ -9,9 +9,9 @@ public class TextStatementFormatter implements StatementFormatter {
 
         if(statementLine.isDeposit())
         {
-            return String.format("%s || %s ||  || %s\n", date, amount, balance);
+            return String.format("%s || %s || || %s\n", date, amount, balance);
         } else {
-            return String.format("%s ||  || %s || %s\n", date, amount, balance);
+            return String.format("%s || || %s || %s\n", date, amount, balance);
         }
     }
 
