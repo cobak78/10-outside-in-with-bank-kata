@@ -2,26 +2,28 @@ package bank.tests.acceptance;
 
 import bank.BankAccount;
 import bank.CCalendar;
-import bank.OutputPrinter;
+import bank.Display;
+import bank.TransactionRegistry;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import static org.mockito.Mockito.*;
 
 public class PrintingAccountStatementOnConsoleTest {
 
     private BankAccount bankAccount;
-    private OutputPrinter output;
+    private Display output;
     private CCalendar calendar;
 
     @Before
     public void setUp() throws Exception {
         calendar = mock(CCalendar.class);
-        output = mock(OutputPrinter.class);
-        bankAccount = new BankAccount(calendar, output);
+        output = mock(Display.class);
+        TransactionRegistry transactions = mock(TransactionRegistry.class);
+
+        bankAccount = new BankAccount(output, transactions);
     }
 
     @Test
@@ -39,9 +41,9 @@ public class PrintingAccountStatementOnConsoleTest {
          */
         //Given
         when(calendar.getDate()).thenReturn(
-                new SimpleDateFormat("dd-MM-yyyy").parse("10-01-2012"),
-                new SimpleDateFormat("dd-MM-yyyy").parse("13-01-2012"),
-                new SimpleDateFormat("dd-MM-yyyy").parse("14-01-2012")
+                "10-01-2012",
+                "13-01-2012",
+                "14-01-2012"
         );
         bankAccount.deposit(1000);
         bankAccount.deposit(2000);
