@@ -6,18 +6,22 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class StatementPrinterTest {
 
     private Display display;
     private Printer statementPrinter;
+    private StatementFormatter formatter;
 
     @Before
     public void setUp() throws Exception {
         display = mock(Display.class);
-        statementPrinter = new StatementPrinter(display);
+        formatter = mock(StatementFormatter.class);
+        statementPrinter = new StatementPrinter(display, formatter);
+
+        when(formatter.formatHeader())
+                .thenReturn("date || credit || debit || balance\n");
     }
 
     @Test
@@ -39,6 +43,10 @@ public class StatementPrinterTest {
         transactions.add(new Transaction(transactionDate, transactionAmount));
         transactions.add(new Transaction(transactionDate1, transactionAmount1));
         Statement statement = new Statement(transactions);
+
+        when(formatter.formatLine(any(StatementLine.class)))
+                .thenReturn("10/01/2013 || || 100.00 || 900.00\n")
+                .thenReturn("10/01/2012 || 1000.00 ||  || 1000.00\n");
 
         statementPrinter.print(statement);
 

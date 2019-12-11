@@ -1,29 +1,26 @@
 package bank;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StatementPrinter implements Printer {
     private Display display;
+    private StatementFormatter formatter;
 
-    public StatementPrinter(Display display) {
-
+    public StatementPrinter(Display display, StatementFormatter formatter) {
         this.display = display;
+        this.formatter = formatter;
     }
 
     @Override
     public void print(Statement statement) {
-        String output = "date || credit || debit || balance\n";
+        String output = formatter.formatHeader();
 
-        ArrayList<Transaction> transactions = statement.getTransactions();
+        List<StatementLine> statementLines = statement.getLines();
 
-        Transaction transaction = transactions.get(0);
-
-        if (!transactions.isEmpty()) {
-            output +=
-                    "10/01/2013 || || 100.00 || 900.00\n" +
-                            "10/01/2012 || 1000.00 ||  || 1000.00\n";
+        for (StatementLine statementLine : statementLines) {
+            output += formatter.formatLine(statementLine);
         }
-
 
         display.print(output);
     }

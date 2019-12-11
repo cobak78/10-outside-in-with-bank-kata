@@ -21,10 +21,11 @@ public class Statement {
             balance += transaction.getAmount();
             lines.add(new StatementLine(transaction, balance));
         }
+        return lines;
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
+    public List<StatementLine> getLines() {
+        return lines;
     }
 
     @Override
